@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_trip/model/home_page_bean_entity.dart';
 import 'package:flutter_trip/mywidget/GridNav.dart';
+import 'package:flutter_trip/mywidget/LocalActNav.dart';
 import 'dart:convert';
 
 import 'package:flutter_trip/mywidget/Local_nav.dart';
@@ -22,7 +23,9 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List<HomePageBeanLocalnavlist> localNavList = [];
-   HomePageBeanGridnav gridNav;
+  HomePageBeanGridnav gridNav;
+  List<HomePageBeanSubnavlist> localActList = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -74,12 +77,18 @@ class _HomePageState extends State<HomePage> {
                       child: LocalNav(localNavList: localNavList),
                     ),
                     Container(
-                      height: 400,
-                      child: GridNav(gridNavModel:gridNav),
-                    )
+                      child: GridNav(gridNavModel: gridNav),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
+                      child: LocalActNav(subNavList: localActList),
+                    ),
+                    Container(
+                      height: 900,
+                      child: Text(""),
+                    ),
                   ],
                 ),
-
               ),
             ),
             Opacity(
@@ -126,6 +135,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       localNavList = homepage.localNavList;
       gridNav = homepage.gridNav;
+      localActList = homepage.subNavList;
     });
   }
 }
