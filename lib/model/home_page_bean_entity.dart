@@ -120,24 +120,24 @@ class HomePageBeanLocalnavlist {
 }
 
 class HomePageBeanSalesbox {
-	HomePageBeanSalesboxBigcard2 bigCard2;
-	HomePageBeanSalesboxSmallcard4 smallCard4;
-	HomePageBeanSalesboxSmallcard3 smallCard3;
-	HomePageBeanSalesboxBigcard1 bigCard1;
-	HomePageBeanSalesboxSmallcard2 smallCard2;
-	HomePageBeanSalesboxSmallcard1 smallCard1;
+	HomePageBeanSalesboxSmallcard bigCard2;
+	HomePageBeanSalesboxSmallcard smallCard4;
+	HomePageBeanSalesboxSmallcard smallCard3;
+	HomePageBeanSalesboxSmallcard bigCard1;
+	HomePageBeanSalesboxSmallcard smallCard2;
+	HomePageBeanSalesboxSmallcard smallCard1;
 	String icon;
 	String moreUrl;
 
 	HomePageBeanSalesbox({this.bigCard2, this.smallCard4, this.smallCard3, this.bigCard1, this.smallCard2, this.smallCard1, this.icon, this.moreUrl});
 
 	HomePageBeanSalesbox.fromJson(Map<String, dynamic> json) {
-		bigCard2 = json['bigCard2'] != null ? new HomePageBeanSalesboxBigcard2.fromJson(json['bigCard2']) : null;
-		smallCard4 = json['smallCard4'] != null ? new HomePageBeanSalesboxSmallcard4.fromJson(json['smallCard4']) : null;
-		smallCard3 = json['smallCard3'] != null ? new HomePageBeanSalesboxSmallcard3.fromJson(json['smallCard3']) : null;
-		bigCard1 = json['bigCard1'] != null ? new HomePageBeanSalesboxBigcard1.fromJson(json['bigCard1']) : null;
-		smallCard2 = json['smallCard2'] != null ? new HomePageBeanSalesboxSmallcard2.fromJson(json['smallCard2']) : null;
-		smallCard1 = json['smallCard1'] != null ? new HomePageBeanSalesboxSmallcard1.fromJson(json['smallCard1']) : null;
+		bigCard2 = json['bigCard2'] != null ? new HomePageBeanSalesboxSmallcard.fromJson(json['bigCard2']) : null;
+		smallCard4 = json['smallCard4'] != null ? new HomePageBeanSalesboxSmallcard.fromJson(json['smallCard4']) : null;
+		smallCard3 = json['smallCard3'] != null ? new HomePageBeanSalesboxSmallcard.fromJson(json['smallCard3']) : null;
+		bigCard1 = json['bigCard1'] != null ? new HomePageBeanSalesboxSmallcard.fromJson(json['bigCard1']) : null;
+		smallCard2 = json['smallCard2'] != null ? new HomePageBeanSalesboxSmallcard.fromJson(json['smallCard2']) : null;
+		smallCard1 = json['smallCard1'] != null ? new HomePageBeanSalesboxSmallcard.fromJson(json['smallCard1']) : null;
 		icon = json['icon'];
 		moreUrl = json['moreUrl'];
 	}
@@ -190,14 +190,14 @@ class HomePageBeanSalesboxBigcard2 {
 	}
 }
 
-class HomePageBeanSalesboxSmallcard4 {
+class HomePageBeanSalesboxSmallcard {
 	String icon;
 	String title;
 	String url;
 
-	HomePageBeanSalesboxSmallcard4({this.icon, this.title, this.url});
+	HomePageBeanSalesboxSmallcard({this.icon, this.title, this.url});
 
-	HomePageBeanSalesboxSmallcard4.fromJson(Map<String, dynamic> json) {
+	HomePageBeanSalesboxSmallcard.fromJson(Map<String, dynamic> json) {
 		icon = json['icon'];
 		title = json['title'];
 		url = json['url'];

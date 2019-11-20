@@ -7,6 +7,7 @@ import 'package:flutter_trip/mywidget/LocalActNav.dart';
 import 'dart:convert';
 
 import 'package:flutter_trip/mywidget/Local_nav.dart';
+import 'package:flutter_trip/mywidget/SaleBox.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   List<HomePageBeanLocalnavlist> localNavList = [];
   HomePageBeanGridnav gridNav;
   List<HomePageBeanSubnavlist> localActList = [];
+  HomePageBeanSalesbox salesBox;
 
   @override
   void initState() {
@@ -43,53 +45,65 @@ class _HomePageState extends State<HomePage> {
               removeTop: true,
               context: context,
               child: NotificationListener(
-                onNotification: (scrollNotification) {
-                  // ignore: missing_return
-                  if (scrollNotification is ScrollUpdateNotification &&
-                      scrollNotification.depth == 0) {
-                    //滚动且列表滚动的时候
-                    _onScroll(scrollNotification.metrics.pixels);
-                  }
-                },
-                child: ListView(
-                  children: <Widget>[
-                    Container(
-                        height: 200,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Swiper(
-                            layout: SwiperLayout.STACK,
-                            itemWidth: 350.0,
-                            duration: 1000,
-                            itemCount: imageUrls.length,
-                            autoplay: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Image.network(
-                                imageUrls[index],
-                                fit: BoxFit.fill,
-                              );
-                            },
-                            pagination: SwiperPagination(),
+                  onNotification: (scrollNotification) {
+                    // ignore: missing_return
+                    if (scrollNotification is ScrollUpdateNotification &&
+                        scrollNotification.depth == 0) {
+                      //滚动且列表滚动的时候
+                      _onScroll(scrollNotification.metrics.pixels);
+                    }
+                  },
+                  child: RefreshIndicator(
+                      child: ListView(
+                        children: <Widget>[
+                          Container(
+                              height: 200,
+                              width: MediaQuery.of(context).size.height,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Swiper(
+                                  layout: SwiperLayout.STACK,
+                                  itemWidth: 350.0,
+                                  duration: 1000,
+                                  itemCount: imageUrls.length,
+                                  autoplay: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Image.network(
+                                      imageUrls[index],
+                                      fit: BoxFit.fill,
+                                    );
+                                  },
+                                  pagination: SwiperPagination(),
+                                ),
+                              )),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
+                            child: LocalNav(localNavList: localNavList),
                           ),
-                        )),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
-                      child: LocalNav(localNavList: localNavList),
-                    ),
-                    Container(
-                      child: GridNav(gridNavModel: gridNav),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
-                      child: LocalActNav(subNavList: localActList),
-                    ),
-                    Container(
-                      height: 900,
-                      child: Text(""),
-                    ),
-                  ],
-                ),
-              ),
+                          Container(
+                            child: GridNav(gridNavModel: gridNav),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
+                            child: LocalActNav(subNavList: localActList),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
+                            child: SaleBox(salesBox: salesBox),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8, 5, 5, 8),
+                            child: RaisedButton(
+                              child: Text("按钮"),
+                              onPressed: loadData,
+                              disabledColor: Color(0xffffff00),
+                              color: Color(0xffff00ff),
+                            ),
+                          ),
+                        ],
+                      ),
+                      onRefresh: loadData)),
             ),
             Opacity(
               opacity: appBarAlpha,
@@ -118,14 +132,13 @@ class _HomePageState extends State<HomePage> {
     } else if (alpha > 1) {
       alpha = 1;
     }
-
     setState(() {
       appBarAlpha = alpha;
     });
     print(appBarAlpha);
   }
 
-  void loadData() async {
+  Future<Null> loadData() async {
     Response response = await Dio()
         .get("http://www.devio.org/io/flutter_app/json/home_page.json");
     var data = response.data;
@@ -136,6 +149,8 @@ class _HomePageState extends State<HomePage> {
       localNavList = homepage.localNavList;
       gridNav = homepage.gridNav;
       localActList = homepage.subNavList;
+      salesBox = homepage.salesBox;
+      return null;
     });
   }
 }
